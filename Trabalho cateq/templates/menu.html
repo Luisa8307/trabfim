@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu - Mesa {{ mesa_id }}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .menu-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+        }
+        .menu-container h1 {
+            font-size: 28px;
+        }
+        .item {
+            border-bottom: 1px solid #ccc;
+            padding: 10px 0;
+        }
+        .item h2 {
+            margin: 0;
+            font-size: 22px;
+        }
+        .item p {
+            margin: 5px 0;
+            color: #777;
+        }
+        .item button {
+            padding: 8px 16px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .item button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <div class="menu-container">
+        <h1>Cardápio - Mesa {{ mesa_id }}</h1>
+        
+        <div class="item">
+            <h2>Hambúrguer</h2>
+            <p>Pão artesanal, carne bovina, queijo cheddar, alface, tomate.</p>
+            <button onclick="confirmarPedido({{ mesa_id }})">Pedir</button>
+        </div>
+
+        <div class="item">
+            <h2>Pizza de Calabresa</h2>
+            <p>Massa fina, calabresa, cebola, mussarela e orégano.</p>
+            <button onclick="confirmarPedido({{ mesa_id }})">Pedir</button>
+        </div>
+
+        <div class="item">
+            <h2>Suco de Laranja</h2>
+            <p>Suco natural de laranja.</p>
+            <button onclick="confirmarPedido({{ mesa_id }})">Pedir</button>
+        </div>
+    </div>
+
+    <script>
+        function confirmarPedido(mesa_id) {
+            window.location.href = `/confirmacao?mesa_id=${mesa_id}`;
+        }
+    </script>
+</body>
+</html>
