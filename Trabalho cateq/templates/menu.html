@@ -7,6 +7,7 @@
     <style>
         body {
             font-family: Arial, sans-serif;
+            
         }
         .menu-container {
             max-width: 800px;
@@ -35,39 +36,119 @@
             color: white;
             border: none;
             cursor: pointer;
+            border: 1px, solid, black;
+            border-radius: 10px;
         }
         .item button:hover {
             background-color: #218838;
+        
         }
+        .incrementbutton {
+            border: 1px, solid, black;
+            border-radius: 5px;
+            width: 20px;
+            height: 10px;
+            
+        }
+        .finpedido {
+            display: flex;
+            justify-content: center;
+            margin-top: 5%;
+        }
+
+        .finpedido button {
+            padding: 8px 16px;
+            background-color: #3b28a7;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border: 1px, solid, black;
+            border-radius: 10px;
+        }
+        .finpedido button:hover {
+            background-color: #218838;
+        }
+
     </style>
+
 </head>
 <body>
     <div class="menu-container">
         <h1>Cardápio - Mesa {{ mesa_id }}</h1>
         
         <div class="item">
-            <h2>Hambúrguer</h2>
+            <h2 id = 'hamb'>Hambúrguer</h2> 
             <p>Pão artesanal, carne bovina, queijo cheddar, alface, tomate.</p>
-            <button onclick="confirmarPedido({{ mesa_id }})">Pedir</button>
+            
+            <form>
+                <input type="text" id="number" class="incrementbutton" value="0" disabled/>
+                <button type="button" onclick="incrementValue()" value="Increment Value"> adicionar </button>
+             </form>
+          
         </div>
 
         <div class="item">
             <h2>Pizza de Calabresa</h2>
             <p>Massa fina, calabresa, cebola, mussarela e orégano.</p>
-            <button onclick="confirmarPedido({{ mesa_id }})">Pedir</button>
+
+                <form>
+                    <input type="text" id="number2" class="incrementbutton" value="0" disabled/>
+                    <button type="button" onclick="incrementValue2()" value="Increment Value2"> adicionar </button>
+                 </form>
         </div>
 
         <div class="item">
             <h2>Suco de Laranja</h2>
             <p>Suco natural de laranja.</p>
-            <button onclick="confirmarPedido({{ mesa_id }})">Pedir</button>
+          
+            <form>
+                <input type="text" id="number3" class="incrementbutton" value="0" disabled/>
+                <button type="button" onclick="incrementValue3()" value="Increment Value3"> adicionar </button>
+             </form>
+       
         </div>
+
+        <div class="finpedido">
+        <button onclick="confirmarPedido({{ mesa_id }})">Pedir</button>
+        </div>
+
     </div>
 
     <script>
         function confirmarPedido(mesa_id) {
             window.location.href = `/confirmacao?mesa_id=${mesa_id}`;
         }
+
+        function incrementValue(){
+            var value = parseInt(document.getElementById('number').value, 10);
+            value = isNaN(value) ? 0 : value;
+            value++;
+            document.getElementById('number').value = value;
+
+        }
+
+        function incrementValue2(){
+            var value2 = parseInt(document.getElementById('number2').value, 10);
+            value2 = isNaN(value2) ? 0 : value2;
+            value2++;
+            document.getElementById('number2').value = value2;
+        }
+
+        function incrementValue3(){
+            var value3 = parseInt(document.getElementById('number3').value, 10);
+            value3 = isNaN(value3) ? 0 : value3;
+            value3++;
+            document.getElementById('number3').value = value3;
+        }
+
+        let dados = {
+            "mesa": 1,
+            "pedido": document.getElementById('hamb').value,
+            "quantidade": document.getElementById('number').value
+        }
+    
+
+
     </script>
 </body>
 </html>

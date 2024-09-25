@@ -1,12 +1,22 @@
-from PyQt6.QtWidgets import QApplication, QLabel, QPushButton, QVBoxLayout, QWidget, QComboBox
-from PyQt6.QtGui import QPixmap
 import sys
+
 import qrcode
+from PyQt6.QtGui import QPixmap
+from PyQt6.QtWidgets import (
+    QApplication,
+    QComboBox,
+    QLabel,
+    QPushButton,
+    QVBoxLayout,
+    QWidget,
+)
+
 
 def gerar_qrcode(numero_mesa):
     url = f"http://localhost:5000/mesa/{numero_mesa}"
     qr = qrcode.make(url)
     qr.save(f"qrcode_mesa_{numero_mesa}.png")
+
 
 class SistemaRestaurante(QWidget):
     def __init__(self):
@@ -34,6 +44,7 @@ class SistemaRestaurante(QWidget):
         gerar_qrcode(numero_mesa)  # Chama a função para gerar QR code
         pixmap = QPixmap(f"qrcode_mesa_{numero_mesa}.png")
         self.label_qrcode.setPixmap(pixmap)
+
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
