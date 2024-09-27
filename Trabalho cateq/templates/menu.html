@@ -7,19 +7,21 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            
+            background-image: url("https://i.pinimg.com/originals/ea/d6/2d/ead62de37377481be53a8a994ee406b8.jpg");
+            background-repeat: no-repeat;
+            background-size: cover;
         }
+
         .menu-container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
+            display: flex;
+            flex-direction: column;
             text-align: center;
         }
         .menu-container h1 {
-            font-size: 28px;
+            font-size: 30px;
+            font-style: oblique;
         }
         .item {
-            border-bottom: 1px solid #ccc;
             padding: 10px 0;
         }
         .item h2 {
@@ -33,6 +35,9 @@
         .item button {
             padding: 8px 16px;
             background-color: #28a745;
+            height: 40px;
+            width: 40px;
+            
             color: white;
             border: none;
             cursor: pointer;
@@ -47,7 +52,7 @@
             border: 1px, solid, black;
             border-radius: 5px;
             width: 20px;
-            height: 10px;
+            height: 20px;
             
         }
         .finpedido {
@@ -74,63 +79,95 @@
 </head>
 <body>
     <div class="menu-container">
-        <h1>Cardápio - Mesa {{ mesa_id }}</h1>
+        <h1>Cardápio</h1><br>
+        <h2 id = 'mesa'>Mesa {{ mesa_id }}</h2>
         
         <div class="item">
-            <h2 id = 'hamb'>Hambúrguer</h2> 
+            <h2 id = 'hamb'>Hambúrguer Artesanal</h2> 
             <p>Pão artesanal, carne bovina, queijo cheddar, alface, tomate.</p>
-            
+            <br>
+
             <form>
-                <input type="text" id="number" class="incrementbutton" value="0" disabled/>
-                <button type="button" onclick="incrementValue()" value="Increment Value"> adicionar </button>
+                <input type="text" id="number" class="incrementbutton" value="0" min = '0' disabled/>
+                <button type="button" onclick="incrementValue()" value="incrementValue">+</button>
+                
+                <button type="button" onclick="decrementValue()" value="decrementValue">-</button>
              </form>
           
         </div>
 
         <div class="item">
-            <h2>Pizza de Calabresa</h2>
+            <h2 id = 'pizz'>Pizza de Calabresa</h2>
             <p>Massa fina, calabresa, cebola, mussarela e orégano.</p>
+            <br>
 
                 <form>
-                    <input type="text" id="number2" class="incrementbutton" value="0" disabled/>
-                    <button type="button" onclick="incrementValue2()" value="Increment Value2"> adicionar </button>
+                    <input type="text" id="number2" class="incrementbutton" value="0" min = '0' disabled/>
+                   
+                    <button type="button" onclick="incrementValue2()" value="incrementValue">+</button>             
+                    <button type="button" onclick="decrementValue2()" value="decrementValue">-</button>
+
                  </form>
         </div>
 
         <div class="item">
-            <h2>Suco de Laranja</h2>
+            <h2 id = 'suco'>Suco de Laranja</h2>
             <p>Suco natural de laranja.</p>
-          
+            <br>
+
             <form>
-                <input type="text" id="number3" class="incrementbutton" value="0" disabled/>
-                <button type="button" onclick="incrementValue3()" value="Increment Value3"> adicionar </button>
+                <input type="text" id="number3" class="incrementbutton" value="0" min = '0' disabled/>
+
+                <button type="button" onclick="incrementValue3()" value="incrementValue">+</button>             
+                <button type="button" onclick="decrementValue3()" value="decrementValue">-</button>
+
              </form>
        
         </div>
 
         <div class="finpedido">
-        <button onclick="confirmarPedido({{ mesa_id }})">Pedir</button>
+        <button id = 'enviar' onclick="confirmarPedido({{ mesa_id }})"">Pedir</button>
         </div>
 
     </div>
 
     <script>
+
         function confirmarPedido(mesa_id) {
             window.location.href = `/confirmacao?mesa_id=${mesa_id}`;
         }
 
-        function incrementValue(){
+        function incrementValue() {
             var value = parseInt(document.getElementById('number').value, 10);
             value = isNaN(value) ? 0 : value;
             value++;
             document.getElementById('number').value = value;
+        }
 
+        function decrementValue() {
+            var value = parseInt(document.getElementById('number').value, 10);
+            value = isNaN(value) ? 0 : value;
+            // Garante que o valor não fique abaixo de zero
+            if (value > 0) {
+                value--;
+            }
+            document.getElementById('number').value = value;
         }
 
         function incrementValue2(){
             var value2 = parseInt(document.getElementById('number2').value, 10);
             value2 = isNaN(value2) ? 0 : value2;
             value2++;
+            document.getElementById('number2').value = value2;
+        }
+
+        function decrementValue2() {
+            var value2 = parseInt(document.getElementById('number2').value, 10);
+            value2 = isNaN(value2) ? 0 : value2;
+            // Garante que o valor não fique abaixo de zero
+            if (value2 > 0) {
+                value2--;
+            }
             document.getElementById('number2').value = value2;
         }
 
@@ -141,12 +178,60 @@
             document.getElementById('number3').value = value3;
         }
 
-        let dados = {
-            "mesa": 1,
-            "pedido": document.getElementById('hamb').value,
-            "quantidade": document.getElementById('number').value
+        function decrementValue3() {
+            var value3 = parseInt(document.getElementById('number3').value, 10);
+            value3 = isNaN(value3) ? 0 : value3;
+            // Garante que o valor não fique abaixo de zero
+            if (value3 > 0) {
+                value3--;
+            }
+            document.getElementById('number3').value = value3;
         }
     
+        
+        document.getElementById('enviar').addEventListener('click', function() {
+            const dados = {};
+
+            const mesa = document.getElementById('mesa').innerText;
+            const hamburger = document.getElementById('hamb').innerText;
+            const pizza = document.getElementById('pizz').innerText;
+            const suco = document.getElementById('suco').innerText;
+
+            const quantidade_hambuger = parseInt(document.getElementById('number').value, 10);
+            const quantidade_pizza = parseInt(document.getElementById('number2').value, 10);
+            const quantidade_suco = parseInt(document.getElementById('number3').value, 10);
+
+            dados.mesa = mesa;
+
+            if (quantidade_hambuger > 0) {
+                dados.hamburger = hamburger;
+                dados.quantidade_hamb = quantidade_hambuger;
+            }
+
+            if (quantidade_pizza > 0) {
+                dados.pizza = pizza;
+                dados.quantidade_pizz = quantidade_pizza;
+            }
+
+            if (quantidade_suco > 0) {
+                dados.suco = suco;
+                dados.quantidade_suc = quantidade_suco;
+            }
+
+        // Enviando os dados para a API
+        fetch('/api/dados', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ dados: dados })
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+        })
+        .catch(error => console.error('Erro:', error));
+    });
 
 
     </script>
