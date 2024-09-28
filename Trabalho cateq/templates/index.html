@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurante</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            padding: 50px;
+            background: linear-gradient(to bottom right, #f8f9fa, #e9ecef);
+        }
+
+        h1 {
+            font-size: 48px;
+            color: #343a40;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            font-size: 24px;
+            color: #495057;
+            margin-bottom: 30px;
+        }
+
+        input {
+            margin: 10px;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            transition: border-color 0.3s;
+        }
+
+        input:focus {
+            border-color: #28a745;
+            outline: none;
+        }
+
+        .gera_qrcode {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 18px;
+            transition: background-color 0.3s;
+        }
+
+        .gera_qrcode:hover {
+            background-color: #218838;
+        }
+
+        .qr-code {
+            margin-top: 30px;
+        }
+
+        .qr-code img {
+            width: 200px;
+            height: 200px;
+            border: 2px solid #28a745;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <h1>Restaurante ...</h1>
+    <h2>Gerar QR Code para a Mesa</h1>
+    <form action="/gerar_qrcode" method="POST">
+        <input type="number" name="mesa_id" placeholder="Digite o numero da mesa" required min="1">
+        <button class = 'gera_qrcode' type="submit">Gerar QR Code</button>
+    </form>
+    
+    {% if qr_code_path %}
+    <div class="qr-code">
+        <img src="{{ url_for('static', filename=qr_code_path) }}" alt="QR Code">
+    </div>
+    {% endif %}
+</body>
+</html>
