@@ -3,44 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nota Fiscal</title>
+    <title>Nota Fiscal - Mesa {{ dados.mesa_id }}</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 20px;
             background: #f4f4f4;
-        }
-        .nota-fiscal {
-            max-width: 600px;
-            margin: 0 auto;
             padding: 20px;
-            background: #fff;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
         h1 {
             text-align: center;
-            color: #333;
         }
-        .detalhes {
-            margin: 20px 0;
+        .nota-fiscal {
+            border: 1px solid #ccc;
+            padding: 20px;
+            border-radius: 5px;
+            background-color: #fff;
         }
-        .detalhes div {
-            margin: 5px 0;
-        }
-        .linha {
-            display: flex;
-            justify-content: space-between;
-            border-bottom: 1px solid #ccc;
-            padding: 5px 0;
+        .item {
+            margin: 10px 0;
         }
         .total {
             font-weight: bold;
-            font-size: 1.2em;
-            margin-top: 15px;
-            text-align: right;
+            font-size: 18px;
         }
         .footer {
             text-align: center;
@@ -51,35 +35,55 @@
     </style>
 </head>
 <body>
+    <h1>Nota Fiscal</h1>
     <div class="nota-fiscal">
-        <h1>Nota Fiscal</h1>
-        <div class="detalhes">
-            <div>Mesa: {{ mesa_id }}</div>
-            <div>Data: {{ data }}</div>
-        </div>
-        <div class="detalhes">
-            {% if quantidade_hamb > 0 %}
-                <div class="linha">
-                    <span>Hambúrguer Artesanal</span>
-                    <span>{{ quantidade_hamb }} x R$ 20,00</span>
-                </div>
-            {% endif %}
-            {% if quantidade_pizz > 0 %}
-                <div class="linha">
-                    <span>Pizza de Calabresa</span>
-                    <span>{{ quantidade_pizz }} x R$ 30,00</span>
-                </div>
-            {% endif %}
-            {% if quantidade_suc > 0 %}
-                <div class="linha">
-                    <span>Suco de Laranja</span>
-                    <span>{{ quantidade_suc }} x R$ 5,00</span>
-                </div>
-            {% endif %}
-        </div>
+        <h2>Mesa: {{ dados.mesa_id }}</h2>
+        {% if dados.hamburger %}
+            <div class="item">
+                <p>{{ dados.hamburger }}: {{ dados.quantidade_hamb }} unidades x R$ 20,00</p>
+            </div>
+        {% endif %}
+        {% if dados.pizza %}
+            <div class="item">
+                <p>{{ dados.pizza }}: {{ dados.quantidade_pizz }} unidades x R$ 30,00</p>
+            </div>
+        {% endif %}
+        {% if dados.suco %}
+            <div class="item">
+                <p>{{ dados.suco }}: {{ dados.quantidade_suc }} unidades x R$ 5,00</p>
+            </div>
+        {% endif %}
+
         <div class="total">
-            Total: R$ {{ total }}
+            <p>Total de itens: 
+                {% set total = 0 %}
+                {% if dados.quantidade_hamb %}
+                    {% set total = total + dados.quantidade_hamb %}
+                {% endif %}
+                {% if dados.quantidade_pizz %}
+                    {% set total = total + dados.quantidade_pizz %}
+                {% endif %}
+                {% if dados.quantidade_suc %}
+                    {% set total = total + dados.quantidade_suc %}
+                {% endif %}
+                {{ total }}
+            </p>
+
+            <p>Total:
+            {% set total_din = 0 %}
+            {% if dados.quantidade_hamb %}
+                    {% set total_din = total_din + (dados.quantidade_hamb * 20) %}
+                {% endif %}
+                {% if dados.quantidade_pizz %}
+                    {% set total_din = total_din + (dados.quantidade_pizz * 30) %}
+                {% endif %}
+                {% if dados.quantidade_suc %}
+                    {% set total_din = total_din + (dados.quantidade_suc * 5) %}
+                {% endif %}
+                R$ {{ total_din }} 
+            </p>
         </div>
+
         <div class="footer">
             Obrigado pela preferência!<br>
             Volte sempre!
